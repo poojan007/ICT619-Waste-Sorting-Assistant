@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waste Classification App</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="bg-dark py-3">
+        <div class="container">
+            <h1 class="text-white">SmartSort</h1>
+        </div>
+    </header>
+    
+    <!-- Body -->
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-md-6 mx-auto">
+                <h2>Upload Your File</h2>
+                <!-- File Upload Form -->
+                <form action="/" method="POST">
+                    <div class="form-group">
+                        <label for="fileUpload">Choose file</label>
+                        <input type="file" class="form-control-file" id="file" name="file">
+                    </div>
+                    <button type="button" class="btn btn-primary" onclick="classifyWaste()">Upload</button>
+                </form>
+            </div>
+            <div class="col-md-6" id="result"></div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="bg-dark py-3 mt-auto">
+        <div class="container">
+            <p class="text-white text-center m-0">© 2024 SmartSort</p>
+        </div>
+    </footer>
+    <!-- Jquery JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+
+        function classifyWaste(){
+            var file = document.getElementById("file").files;
+            var result = document.getElementById("result");
+            result.innerHTML = "";
+
+            if(file.length > 0){
+                var form_data = new FormData();
+                form_data.append("file", document.getElementById("file").files[0]);
+
+                $.ajax({
+                    url: 'classify', // point to server-side URL
+                    dataType: 'json', // what to expect back from server
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    data: form_data,
+                    type: 'post',
+                    success: function (data) {
+                        var predicted_value = data["predicted_value"];
+                        result.innerHTML = "<center><h3>Waste classified as: <b style='background-color: #0b2438;'>" + predicted_value + "</b></h3></center>"
+                    }
+                });
+            }
+        }
+
+    </script>
+
+</body>
+</html>
