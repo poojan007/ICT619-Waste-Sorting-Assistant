@@ -5,7 +5,7 @@ model = None
 
 def load_model():
     global model
-    model = tf.keras.models.load_model("web-app/tf_model_1.h5")
+    model = tf.keras.models.load_model("web-app/tf_model_1.keras")
     print("Model loaded successfully")
 
 def classify_waste(img_path):
