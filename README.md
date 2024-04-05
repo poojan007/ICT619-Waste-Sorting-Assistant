@@ -23,6 +23,7 @@ pip install -r requirements.txt
 To run the application:
 
 ```bash
+cd web-app
 python app.py
 ```
 
